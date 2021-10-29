@@ -18,4 +18,4 @@ theSchool() {
 
 
 
-modules.exports = Intern
+module.exports = Intern

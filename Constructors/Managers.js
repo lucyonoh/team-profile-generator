@@ -18,4 +18,4 @@ theOfficeNumber() {
 
 
 
-modules.exports = Managers
+module.exports = Managers

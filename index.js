@@ -4,7 +4,9 @@ const Engineer = require("./Constructors/Engineer")
 const inquirer = require("inquirer")
 const path = require("path")
 const fs = require("fs")
-const Choice = require("inquirer/lib/objects/choice")
+const OUTPUT_DIR = path.resolve(__dirname, "output")
+const outputPath = path.join(OUTPUT_DIR, "team.html")
+const render = require("./src/page-template.js")
 
 
 const team =[]
@@ -70,5 +72,74 @@ inquirer.prompt([{
 
         
     }
+    function addEngineer (){
+    inquirer.prompt ([{
+
+        type:"input",
+        name:"engineerName",
+        message:"What is the name of the Engineer?",
+    }, {
+        type:"input",
+        name:"email",
+        message:"What is your email?",
+    }, {
+        type:"input",
+        name:"github",
+        message: "What is your gitHub username?",
+    }, {
+        type:"input",
+        name:"employeeid",
+        message:"What is your employee id?"
+    
+
+    }])    
+        .then((answers)=> {
+            const response = new Engineer (answers.engineerName,  answers.employeeid, answers.github, answers.email)
+
+
+            team.push (response)
+             teamDetails ()
+        })
+
+    }
+
+    function addIntern (){
+        inquirer.prompt ([{
+    
+            type:"input",
+            name:"internName",
+            message:"What is the name of the Intern?",
+        }, 
+        {type:"input",
+            name:"email",
+            message:"What is your email?"}
+    
+            ,{type:"input",
+            name:"github",
+            message: "What is the name of your school?"}
+    
+           , {type:"input",
+            name:"employeeid",
+            message:"What is your employee id?"
+    
+    
+        }])    
+            .then((answers)=> {
+                const response = new Intern (answers.school, answers.employeeid, answers.internName, answers.email)
+    
+    
+                team.push (response)
+                 teamDetails ()
+            }) }
+
+         function teamBuild () {
+             if (!fs.existsSync(OUTPUT_DIR)) {
+                 fs.mkdirSync(OUTPUT_DIR)
+             }
+             fs.writeFileSync(outputPath,render(team),"utf-8")
+         }  
+
+    teamManager ()
 }
 
+main ()
